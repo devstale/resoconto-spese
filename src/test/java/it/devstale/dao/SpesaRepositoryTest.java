@@ -114,7 +114,7 @@ public class SpesaRepositoryTest {
 	
 	@Test
 	@Rollback(false)
-	public void findByUtenteAndEtichetta(){
+	public void findByUtenteAndEtichette_id(){
 		try{
 			
 			List<Spesa> spese = repository.findByUtenteAndEtichette_id(new Utente("devstale"), 1L);
@@ -136,6 +136,38 @@ public class SpesaRepositoryTest {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
 	}
+	
+	@Test
+	@Rollback(false)
+	public void findByUtenteAndCartella(){
+		
+		try{
+			
+			List<Spesa> spese = repository.findByUtenteAndCartellaOrderByDataDesc(new Utente("devstale"), new Cartella(1L));
+
+			Assert.assertNotNull(spese);
+			Assert.assertTrue(spese.size()>0);
+			
+			Pageable pageable = PageRequest.of(0, 5, Sort.by(Order.desc("data")));
+			spese = repository.findByUtenteAndCartella(new Utente("devstale"), new Cartella(1L), pageable).getContent();
+
+			Assert.assertNotNull(spese);
+			Assert.assertTrue(spese.size()>0);
+			
+			for (Spesa spesa : spese) {
+				System.out.println(spesa.getId());
+				System.out.println(spesa.getData());
+				System.out.println(spesa.getCartella().getId());
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 
 }

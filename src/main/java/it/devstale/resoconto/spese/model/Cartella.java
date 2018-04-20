@@ -60,6 +60,11 @@ public class Cartella implements Serializable{
 
 	public Cartella() { super(); }
 	
+	public Cartella(Long id) { 
+		super(); 
+		this.id = id;
+	}
+	
 	public Cartella(Long id, String nome, String descrizione, String icona, String colore, Utente utente) {
 		super();
 		this.id = id;
